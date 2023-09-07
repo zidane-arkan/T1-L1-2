@@ -2,9 +2,9 @@
 Dibuat untuk Tugas 1 Metopen
 
 ## Silakan tambahkan variabel percobaan, seperti : ## 
-● Nilai gamma SVM
-● Metode ekstraksi fitur selain TF-IDF
-● Metode seleksi fitur selain Chi-Square
-● Modifikasi program sebelumnya
-● Lakukan percobaan
-● Buat LAPORAN PERCOBAAN
+- Nilai gamma SVM
+- Metode ekstraksi fitur selain TF-IDF
+- Metode seleksi fitur selain Chi-Square
+- Modifikasi program sebelumnya
+- Lakukan percobaan
+- Buat LAPORAN PERCOBAAN
