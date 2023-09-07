@@ -81,7 +81,7 @@ ig = 2  # indeks untuk nilai Gamma
 fs = False  # seleksi fitur, False=None, True=Chi-Square
 print(f'Parameter SVM: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
 
-# Pemilihan Seleksi Fitur
+# TUGAS 3 : Metode seleksi fitur selain Chi-Squar (Pemilihan Seleksi Fitur)
 if fs:
     fs_label = "ChiSquare"
     ch2 = SelectKBest(chi2, k=900)  # nilai k <= jml fitur normal, nilai k optimal dicari manual
