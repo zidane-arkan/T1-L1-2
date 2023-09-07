@@ -2,8 +2,8 @@
 Dibuat untuk Tugas 1 Metopen
 
 ## Silakan tambahkan variabel percobaan, seperti : ## 
-- Nilai gamma SVM
-- Metode ekstraksi fitur selain TF-IDF
+- Nilai gamma SVM (Zidane)
+- Metode ekstraksi fitur selain TF-IDF (Epan)
 - Metode seleksi fitur selain Chi-Square (Hafiz)
 - Modifikasi program sebelumnya
 - Lakukan percobaan
