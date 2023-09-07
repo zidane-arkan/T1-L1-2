@@ -1,5 +1,5 @@
 # T1-L1-2
-Dibuat untuk Tugas 1 Metopen
+Dibuat untuk Tugas 1 Metopen, Laporan (Aditiya, Aisyah, Nadia)
 
 ## Silakan tambahkan variabel percobaan, seperti : ## 
 - Nilai gamma SVM (Zidane)
