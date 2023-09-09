@@ -86,9 +86,9 @@ pC = [0.1, 1.0, 10.0]  # nilai C (hyperplane)
 pGamma = [0.1, 1.0, 10.0] # Nilai Gamma
 pFitur = ['chisquare','randomforest','none']
 ik = 0  # indeks untuk kernel
-ic = 1 # indeks untuk nilai C
-ig = 1 # indeks untuk nilai Gamma
-fs = 2  # seleksi fitur
+ic = 0 # indeks untuk nilai C
+ig = 0 # indeks untuk nilai Gamma
+fs = 0  # seleksi fitur
 print(f'Parameter SVM: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
 
 # TUGAS 3 : Metode seleksi fitur selain Chi-Squar (Pemilihan Seleksi Fitur)
