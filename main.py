@@ -12,9 +12,12 @@ from sklearn.feature_selection import chi2
 from sklearn import svm
 from sklearn.metrics import classification_report, precision_score, recall_score, f1_score, accuracy_score
 from sklearn.metrics import confusion_matrix
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
+
 
 # load dataset
-file_dataset = 'dataset_tweet_sentiment_pilkada_DKI_2017.csv'
+file_dataset = 'T1-L1-2/dataset_tweet_sentiment_pilkada_DKI_2017.csv'
 data = pd.read_csv(file_dataset)
 # cetak informasi dataset
 print(data.head())
@@ -75,20 +78,28 @@ pKernel = ['linear', 'rbf']  # kernel SVM
 pC = [0.1, 1.0, 10.0]  # nilai C (hyperplane)
 # Menggunakan Nilai Gamma
 pGamma = [0.1, 1.0, 10.0]
-ik = 0  # indeks untuk kernel
-ic = 1  # indeks untuk nilai C
+ik = 1  # indeks untuk kernel
+ic = 2  # indeks untuk nilai C
 ig = 2  # indeks untuk nilai Gamma
-fs = False  # seleksi fitur, False=None, True=Chi-Square
+fs = True  # seleksi fitur, False=Random Forest, True=Chi-Square
 print(f'Parameter SVM: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
 
 # TUGAS 3 : Metode seleksi fitur selain Chi-Squar (Pemilihan Seleksi Fitur)
 if fs:
-    fs_label = "ChiSquare"
-    ch2 = SelectKBest(chi2, k=900)  # nilai k <= jml fitur normal, nilai k optimal dicari manual
+    fs_label = "ChiSquare" 
+    ch2 = SelectKBest(chi2, k=500)  
     tfidf_train_vectors = ch2.fit_transform(tfidf_train_vectors, y_train)
     tfidf_test_vectors = ch2.transform(tfidf_test_vectors)
 else:
-    fs_label = "None";
+    fs_label = "RandomForest"
+    RF = RandomForestClassifier(n_estimators=500, max_features="sqrt", random_state=42)
+    RF.fit(tfidf_train_vectors, y_train)
+    feature_importances = RF.feature_importances_
+    sfm = SelectFromModel(RF, threshold='median')
+
+    tfidf_train_vectors = sfm.fit_transform(tfidf_train_vectors, y_train)
+    tfidf_test_vectors = sfm.transform(tfidf_test_vectors)
+    
 
 print(f'Seleksi Fitur SVM: {fs_label}')
 
