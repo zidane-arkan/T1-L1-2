@@ -5,6 +5,8 @@ fs_label = filename[10:13]; # Chi
 text = ['pilkada akan dimenangkan oleh anies']
 
 with open(filename, 'rb') as fin:
+    # loaded_objects = pickle.load(fin)
+    # print(loaded_objects)
     if fs_label == "Chi":
         vectorizer, ch2, clf = pickle.load(fin)
         tfidf_text_vectors = vectorizer.transform(text)

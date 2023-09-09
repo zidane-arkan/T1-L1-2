@@ -145,17 +145,17 @@ print('F1-Score\t: {:.2}'.format(f1_score(y_test, y_pred)))
 print('\n')
 
 # Statistik Hasil Percobaan menggunakan ngram
-print('Statistik Hasil Data Dan Fitur Menggunakan ngram : ')
-print(f'Sel. Fitur\t: {fs_label}')
-print(f'Param. SVM\t: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
+# print('Statistik Hasil Data Dan Fitur Menggunakan ngram : ')
+# print(f'Sel. Fitur\t: {fs_label}')
+# print(f'Param. SVM\t: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
 # Statistik Hasil Data Dan Fitur Menggunakan ngram
-print(f'Jml. Data\t: {ngram_train_matrix.shape[0]} (80%)')
-print(f'Jml. Fitur\t: {ngram_train_matrix.shape[1]}')
-
-print('Precision\t: {:.2}'.format(precision_score(y_test, y_pred)))
-print('Recall\t\t: {:.2}'.format(recall_score(y_test, y_pred)))
-print('Accuracy\t: {:.2}'.format(accuracy_score(y_test, y_pred)))
-print('F1-Score\t: {:.2}'.format(f1_score(y_test, y_pred)))
+# print(f'Jml. Data\t: {ngram_train_matrix.shape[0]} (80%)')
+# print(f'Jml. Fitur\t: {ngram_train_matrix.shape[1]}')
+#
+# print('Precision\t: {:.2}'.format(precision_score(y_test, y_pred)))
+# print('Recall\t\t: {:.2}'.format(recall_score(y_test, y_pred)))
+# print('Accuracy\t: {:.2}'.format(accuracy_score(y_test, y_pred)))
+# print('F1-Score\t: {:.2}'.format(f1_score(y_test, y_pred)))
 
 # Simpan Model
 filename = f'model-svm-{fs_label}-{pKernel[ik]}-{pC[ic]}.pickle'
@@ -166,9 +166,11 @@ vectorizer.stop_words_ = None
 clf = svm_classifier
 
 with open(filename, 'wb') as fout:
-    if fs:
-        pickle.dump((vectorizer, ch2, clf), fout)
-    else:
+    if pFitur[fs] == 'chisquare':
+        pickle.dump((vectorizer, chi2, clf), fout)
+    elif pFitur[fs] == 'randomforest':
+        pickle.dump((vectorizer, chi2, clf), fout)
+    else :
         pickle.dump((vectorizer, clf), fout)
 
 print(f'Nama Model\t: {filename}')
