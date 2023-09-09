@@ -12,9 +12,9 @@ from sklearn.feature_selection import chi2
 from sklearn import svm
 from sklearn.metrics import classification_report, precision_score, recall_score, f1_score, accuracy_score
 from sklearn.metrics import confusion_matrix
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectFromModel
-
 
 # load dataset
 file_dataset = 'T1-L1-2/dataset_tweet_sentiment_pilkada_DKI_2017.csv'
@@ -68,10 +68,17 @@ y = data['label']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=25)
 print(X_train[0], '-', y_train[0])
 # ubah teks ke vektor dengan TF-IDF
-tfidf_vectorizer = TfidfVectorizer()
-tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
-tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
-print(tfidf_train_vectors[0])
+# tfidf_vectorizer = TfidfVectorizer()
+# tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
+# tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
+# print(tfidf_train_vectors[0])
+
+# feature extraction menggunakan n-grams
+ngram_vectorizer = CountVectorizer(ngram_range=(1, 2)) # unigram dan bigram
+ngram_train_matrix = ngram_vectorizer.fit_transform(X_train)
+ngram_test_matrix = ngram_vectorizer.transform(X_test)
+feature_names = ngram_vectorizer.get_feature_names_out()
+print(ngram_train_matrix.toarray())
 
 # TUGAS 1 : Nilai gamma SVM (Kontrol Parameter SVM)
 pKernel = ['linear', 'rbf']  # kernel SVM
@@ -86,6 +93,10 @@ print(f'Parameter SVM: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
 
 # TUGAS 3 : Metode seleksi fitur selain Chi-Squar (Pemilihan Seleksi Fitur)
 if fs:
+    #fs_label = "ChiSquare"
+    #ch2 = SelectKBest(chi2, k=900)  # nilai k <= jml fitur normal, nilai k optimal dicari manual
+    #ngram_train_matrix = ch2.fit_transform(ngram_train_matrix, y_train)
+    #ngram_test_matrix = ch2.transform(ngram_test_matrix)
     fs_label = "ChiSquare" 
     ch2 = SelectKBest(chi2, k=500)  
     tfidf_train_vectors = ch2.fit_transform(tfidf_train_vectors, y_train)
@@ -105,9 +116,9 @@ print(f'Seleksi Fitur SVM: {fs_label}')
 
 # Training dan Testing SVM (80:20)
 svm_classifier = svm.SVC(kernel=pKernel[ik], C=pC[ic])  # kernel={linear, rbf}, C={0.1,1.0,10.0}
-svm_classifier.fit(tfidf_train_vectors, y_train)  # training
+svm_classifier.fit(ngram_train_matrix, y_train)  # training
 
-y_pred = svm_classifier.predict(tfidf_test_vectors)  # testing
+y_pred = svm_classifier.predict(ngram_test_matrix)  # testing
 
 print(classification_report(y_test, y_pred))
 
@@ -126,8 +137,8 @@ plt.show()
 # Statistik Hasil Percobaan
 print(f'Sel. Fitur\t: {fs_label}')
 print(f'Param. SVM\t: Kernel={pKernel[ik]}, C={pC[ic]}')
-print(f'Jml. Data\t: {tfidf_train_vectors.shape[0]} (80%)')
-print(f'Jml. Fitur\t: {tfidf_train_vectors.shape[1]}')
+print(f'Jml. Data\t: {ngram_train_matrix.shape[0]} (80%)')
+print(f'Jml. Fitur\t: {ngram_train_matrix.shape[1]}')
 print('Precision\t: {:.2}'.format(precision_score(y_test, y_pred)))
 print('Recall\t\t: {:.2}'.format(recall_score(y_test, y_pred)))
 print('Accuracy\t: {:.2}'.format(accuracy_score(y_test, y_pred)))
