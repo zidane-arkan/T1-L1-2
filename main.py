@@ -94,7 +94,7 @@ print(f'Parameter SVM: Kernel={pKernel[ik]}, C={pC[ic]}, Gamma={pGamma[ig]}')
 # TUGAS 3 : Metode seleksi fitur selain Chi-Squar (Pemilihan Seleksi Fitur)
 if pFitur[fs] == 'chisquare':
     fs_label = "ChiSquare"
-    ch2 = SelectKBest(chi2, k=500)
+    ch2 = SelectKBest(chi2, k=900)
     tfidf_train_vectors = ch2.fit_transform(tfidf_train_vectors, y_train)
     tfidf_test_vectors = ch2.transform(tfidf_test_vectors)
 elif pFitur[fs] == 'randomforest':
